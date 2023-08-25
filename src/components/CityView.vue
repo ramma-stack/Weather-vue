@@ -5,7 +5,8 @@
             <div v-if="weatherData" class="order-1 w-full px-3 lg:w-4/6 lg:order-0">
                 <div class="flex flex-col gap-10 w-full lg:max-w-md whitespace-nowrap">
                     <div class="flex flex-col">
-                        <h2 class="text-3xl font-bold leading-tight tracking-tight text-teal-50 sm:text-9xl font-heading">
+                        <h2 :class="checkCharacter(city) ? 'font-semibold text-3xl sm:text-8xl mb-8' : 'font-bold text-3xl sm:text-9xl'"
+                            class="leading-tight tracking-tight text-teal-50 font-heading">
                             {{ city }}
                         </h2>
                         <p class="tracking-tight text-teal-50 text-5xl xl:mb-6">
@@ -36,9 +37,12 @@
                                         class="h-10 w-10">
                                 </div>
                                 <div class="flex items-center space-x-4">
-                                    <div class="text-base">
+                                    <h1 v-if="temp === 'F'" class="text-base">
                                         {{ Math.round(hour.temp) }}°F
-                                    </div>
+                                    </h1>
+                                    <h1 v-else class="text-base">
+                                        {{ Math.round((hour.temp - 32) * 5 / 9) }}°C
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -66,9 +70,12 @@
                                     <img :src="getWeatherIconUrl(day.weather[0].icon)" alt="Weather Icon" class="h-10 w-10">
                                 </div>
                                 <div class="flex items-center space-x-4">
-                                    <div class="text-lg font-semibold">
+                                    <h1 v-if="temp === 'F'" class="text-lg font-semibold">
                                         {{ Math.round(day.temp.max) }}°F
-                                    </div>
+                                    </h1>
+                                    <h1 v-else class="text-lg font-semibold">
+                                        {{ Math.round((day.temp.max - 32) * 5 / 9) }}°C
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -80,11 +87,16 @@
                 <img class="mx-auto mb-7 sm:max-w-sm lg:w-72" :src="getWeatherIconUrl(weatherData.current.weather[0].icon)"
                     alt="feature image">
                 <div class="font-medium tracking-tight text-teal-50 text-3xl flex items-end gap-7">
-                    <h2 class="inline text-3xl font-bold tracking-tight text-teal-50 sm:text-9xl p-0 m-0">
+                    <h2 v-if="temp === 'F'"
+                        class="inline text-3xl font-bold tracking-tight text-teal-50 sm:text-9xl p-0 m-0">
                         {{ Math.round(weatherData.current.temp) }}°F
                     </h2>
-                    <button class="mb-6 bg-teal-50/80 text-teal-500/50 text-4xl rounded-full p-2 px-2.5 pb-1">
-                        °C
+                    <h2 v-else class="inline text-3xl font-bold tracking-tight text-teal-50 sm:text-9xl p-0 m-0">
+                        {{ Math.round((weatherData.current.temp - 32) * 5 / 9) }}°C
+                    </h2>
+                    <button @click="tempChange"
+                        class="mb-6 bg-teal-50/80 text-teal-500/50 text-4xl rounded-full p-2 px-2.5 pb-1">
+                        °{{ temp === 'F' ? 'C' : 'F' }}
                     </button>
                 </div>
                 <p class="mb-4 tracking-tight text-teal-50 text-4xl xl:mb-6 capitalize">
@@ -96,14 +108,44 @@
                 </button>
             </div>
         </div>
+        <div v-if="isLoading" class="flex flex-wrap items-center -mx-3">
+            <div class="order-1 w-full px-3 lg:w-4/6 lg:order-0">
+                <div class="flex flex-col gap-10 w-full lg:max-w-md whitespace-nowrap">
+                    <div class="flex flex-col gap-3">
+                        <SkeletonLoader class="w-full h-28 rounded-2xl" bg-class="bg-gray-100/50" shimmer-color="#85C9C8" />
+                        <SkeletonLoader class="w-full h-16 rounded-2xl" bg-class="bg-gray-100/50" shimmer-color="#85C9C8" />
+                    </div>
+                    <SkeletonLoader class="w-full h-44 rounded-2xl" bg-class="bg-gray-100/50" shimmer-color="#85C9C8" />
+                    <SkeletonLoader class="w-full h-44 rounded-2xl" bg-class="bg-gray-100/50" shimmer-color="#85C9C8" />
+                </div>
+            </div>
+            <div class="flex flex-col items-center w-full px-3 lg:w-2/6 order-0 lg:order-1 lg:mb-0">
+                <!-- <img class="mx-auto mb-7 sm:max-w-sm lg:w-72" :src="getWeatherIconUrl(weatherData.current.weather[0].icon)"
+                    alt="feature image"> -->
+                <SkeletonLoader class="flex justify-center items-center w-full h-48 sm:w-96 mb-10 rounded-2xl"
+                    bg-class="bg-gray-100/50" shimmer-color="#85C9C8">
+                    <svg class="w-12 h-12 text-gray-100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                        fill="#f3f4f6" viewBox="0 0 640 512">
+                        <path
+                            d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z" />
+                    </svg>
+                </SkeletonLoader>
+                <SkeletonLoader class="w-full h-24 mb-5 rounded-2xl" bg-class="bg-gray-100/50" shimmer-color="#85C9C8" />
+                <SkeletonLoader class="w-2/3 h-16 rounded-2xl" bg-class="bg-gray-100/50" shimmer-color="#85C9C8" />
+            </div>
+        </div>
     </section>
 </template>
   
 <script>
 import axios from "axios";
+import SkeletonLoader from "./Skeleton.vue";
 
 export default {
     name: "CityView",
+    components: {
+        SkeletonLoader,
+    },
     data() {
         return {
             city: null,
@@ -111,18 +153,19 @@ export default {
             lat: null,
             lng: null,
             weatherData: null,
+            temp: 'F', // 'F' or 'C
             cityToAdd: '',
             isCityAdded: false,
             cities: [],
-            // preview : false,
+            isLoading: false,
         };
     },
     methods: {
         getWeatherData() {
             try {
                 // Fetch weather data using lat and lng
-                const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.lat}&lon=${this.lng}&exclude={part}&appid=7efa332cf48aeb9d2d391a51027f1a71`;
-                // const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${this.lat}&lon=${this.lng}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8`;
+                const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.lat}&lon=${this.lng}&exclude={part}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`;
+                // const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${this.lat}&lon=${this.lng}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8&units=imperial`;
 
                 axios.get(apiUrl)
                     .then(response => {
@@ -132,7 +175,7 @@ export default {
 
                         this.cityToAdd = `${this.city}`;
                         // console.log(this.cityToAdd);
-                        // console.log(this.weatherData.current.weather[0]); // Do whatever you want with the data here
+                        // console.log(localStorage.getItem('cities')); // Do whatever you want with the data here
                     })
                     .catch(error => {
                         console.error('Error fetching weather data:', error);
@@ -181,11 +224,20 @@ export default {
             }
             this.isCityAdded = !this.isCityAdded;
         },
+        tempChange() {
+            if (this.temp === 'F') {
+                this.temp = 'C';
+            } else {
+                this.temp = 'F';
+            }
+        },
         saveCitiesToLocalStorage() {
             localStorage.setItem('cities', JSON.stringify(this.cities));
         },
         removeCity(city) {
-            localStorage.removeItem('cities', JSON.stringify(city.city));
+            let currentCities = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
+            currentCities = currentCities.filter(c => c.id !== city.id);
+            localStorage.setItem('cities', JSON.stringify(currentCities));
         },
         generateRandomId() {
             return Date.now();
@@ -196,9 +248,27 @@ export default {
             this.lat = this.$route.query.lat;
             this.lng = this.$route.query.lng;
 
-            this.isCityAdded = localStorage.getItem('cities', JSON.stringify(this.storedCities)) ? true : false;
+            const ls = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
+            for (let i = 0; i < ls.length; i++) {
+                if (ls[i].city === this.city) {
+                    this.isCityAdded = true;
+                }
+            }
+
+            // this.isCityAdded = localStorage.getItem('cities', JSON.stringify(this.storedCities)) ? true : false;
             this.cities = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
         },
+        checkCharacter(char) {
+            const kurdishUnicodeRanges = [
+                [0x0600, 0x06FF], // Arabic
+                [0x0750, 0x077F], // Arabic Supplement (Kurdish)
+                // Add more ranges if needed
+            ];
+
+            const charCode = char.charCodeAt(0);
+
+            return kurdishUnicodeRanges.some(([start, end]) => charCode >= start && charCode <= end);
+        }
     },
     computed: {
         iconStyle() {
@@ -216,13 +286,19 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.called();
-            this.getWeatherData();
+            if (to.params.city && from.params.city) {
+                this.called();
+                this.getWeatherData();
+            }
         },
     },
-    created() {
-        this.called();
-        this.getWeatherData();
+    mounted() {
+        this.isLoading = true;
+        setTimeout(() => {
+            this.called();
+            this.getWeatherData();
+            this.isLoading = false;
+        }, 1000);
     },
 };
 </script>

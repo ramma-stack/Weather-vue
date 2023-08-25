@@ -8,7 +8,7 @@
         <component :is="Component" />
       </Transition>
     </RouterView>
-    <!-- <CityView /> -->
+    <!-- <DropDown /> -->
   </div>
 </template>
 
@@ -18,10 +18,11 @@ import Navigation from './components/Navigation.vue';
 import HelloWorld from './components/HelloWorld.vue';
 import Test from './components/Test.vue';
 import CityView from './components/CityView.vue';
+import DropDown from './components/DropDown.vue';
 
 export default {
   name: 'App',
-  components: { Navigation, HelloWorld, Test, CityView },
+  components: { Navigation, HelloWorld, Test, CityView, DropDown },
 }
 </script>
 

@@ -8,7 +8,7 @@ export default {
     extend: {
       fontFamily: {
         Ubuntu: ["Ubuntu"],
-        custom: ['CustomFont'],
+        custom: ['CustomFont', 'rudaw'],
       },
       fontWeight: {
         custom: {

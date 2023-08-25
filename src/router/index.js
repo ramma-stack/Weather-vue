@@ -22,6 +22,10 @@ const routes = createRouter({
         title: "City",
       },
     },
+    {
+      path: "/about",
+      name: "AboutView",
+    }
   ],
 });
 
