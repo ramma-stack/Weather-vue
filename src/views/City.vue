@@ -1,20 +1,19 @@
-<!-- CityView.vue -->
 <template>
-    <section class="max-w-screen-lg items-center mx-auto pt-24">
-        <div class="flex flex-wrap items-center -mx-3">
-            <div v-if="weatherData" class="order-1 w-full px-3 lg:w-4/6 lg:order-0">
+    <section class="max-w-screen-lg items-center mx-auto pt-10 md:pt-16 lg:pt-24">
+        <div v-if="weatherData" class="flex flex-wrap items-center gap-5 lg:gap-0 -mx-3">
+            <div class="order-1 w-full px-3 lg:w-4/6 lg:order-0">
                 <div class="flex flex-col gap-10 w-full lg:max-w-md whitespace-nowrap">
-                    <div class="flex flex-col">
-                        <h2 :class="checkCharacter(city) ? 'font-semibold text-3xl sm:text-8xl mb-8' : 'font-bold text-3xl sm:text-9xl'"
+                    <div class="flex flex-col items-center lg:items-start">
+                        <h2 :class="checkCharacter(city) ? 'font-semibold text-4xl sm:text-8xl mb-8' : 'font-bold text-5xl sm:text-9xl'"
                             class="leading-tight tracking-tight text-teal-50 font-heading">
                             {{ city }}
                         </h2>
-                        <p class="tracking-tight text-teal-50 text-5xl xl:mb-6">
+                        <p class="tracking-tight text-teal-50 text-3xl sm:text-5xl xl:mb-6">
                             {{ formatDate(weatherData.current.dt, 'W') }}
                         </p>
                     </div>
                     <div class="flex flex-col gap-5">
-                        <div class="flex items-center gap-1">
+                        <div class="flex flex-wrap items-center gap-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -24,7 +23,7 @@
                                 Hourly Forecast
                             </p>
                         </div>
-                        <div class="flex gap-6">
+                        <div class="flex flex-wrap sm:flex-nowrap gap-6">
                             <div v-for="(hour, index) in weatherData.hourly.slice(0, 7)" :key="index"
                                 class="flex flex-col items-center gap-2">
                                 <div class="flex items-center space-x-4">
@@ -55,9 +54,9 @@
                                 Daily Forecast
                             </p>
                         </div>
-                        <div class="flex gap-4">
+                        <div class="flex flex-wrap sm:flex-nowrap gap-4">
                             <div v-for="(day, index) in weatherData.daily.slice(0, 7)" :key="index"
-                                class="flex flex-col items-center bg-teal-50 text-[#85C9C8] p-3 rounded-full">
+                                class="flex flex-col items-center bg-teal-50/40 text-[#85C9C8] dark:text-white p-3 rounded-full">
                                 <div class="flex items-center space-x-4 mb-4">
                                     <div class="text-lg font-semibold">
                                         {{ formatDate(day.dt, 'S_H') }}
@@ -76,22 +75,28 @@
                     </div>
                 </div>
             </div>
-            <div v-if="weatherData"
-                class="flex flex-col items-center gap-1 w-full px-3 lg:w-2/6 order-0 lg:order-1 lg:mb-0">
-                <img class="mx-auto mb-7 sm:max-w-sm lg:w-72" :src="getWeatherIconUrl(weatherData.current.weather[0].icon)"
-                    alt="feature image">
+            <div class="flex flex-col items-center gap-1 w-full px-3 lg:w-2/6 order-0 lg:order-1 lg:mb-0">
+                <img class="mx-1 mb-7 w-2/3 sm:max-w-sm lg:w-72"
+                    :src="getWeatherIconUrl(weatherData.current.weather[0].icon)" alt="feature image">
                 <div class="font-medium tracking-tight text-teal-50 text-3xl flex items-end gap-7">
                     <h2 v-if="isCelsius === false"
-                        class="inline text-3xl font-bold tracking-tight text-teal-50 sm:text-9xl p-0 m-0">
+                        class="inline text-5xl font-bold tracking-tight text-teal-50 sm:text-9xl p-0 m-0">
                         {{ Math.round(tempCheck(weatherData.current.temp)) }}°{{ currentUnit }}
                     </h2>
                 </div>
-                <p class="mb-4 tracking-tight text-teal-50 text-4xl xl:mb-6 capitalize">
+                <p class="mb-4 tracking-tight text-teal-50 text-3xl sm:text-4xl xl:mb-6 capitalize">
                     {{ weatherData.current.weather[0].description }}
                 </p>
                 <button @click="toggleCity(cityToAdd)"
                     class="mb-4 tracking-tight bg-teal-50/80 text-gray-800 font-medium text-lg px-3 py-px rounded-full xl:mb-6">
-                    {{ buttonText }}
+                    <span v-if="isCityAdded" class="flex items-center justify-center gap-1">
+                        <BookmarkSlashIcon class="w-5 h-5" />
+                        {{ buttonText }}
+                    </span>
+                    <span v-else class="flex items-center justify-center gap-1">
+                        <BookmarkSquareIcon class="w-5 h-5" />
+                        {{ buttonText }}
+                    </span>
                 </button>
             </div>
         </div>
@@ -126,12 +131,15 @@
   
 <script>
 import axios from "axios";
-import SkeletonLoader from "./Skeleton.vue";
+import SkeletonLoader from "../components/Skeleton.vue";
+import { BookmarkSlashIcon, BookmarkSquareIcon } from "@heroicons/vue/20/solid";
 
 export default {
-    name: "CityView",
+    name: "City",
     components: {
         SkeletonLoader,
+        BookmarkSquareIcon,
+        BookmarkSlashIcon
     },
     data() {
         return {
@@ -233,8 +241,12 @@ export default {
 
             const ls = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
             for (let i = 0; i < ls.length; i++) {
+                // console.log(ls[i].city + '===' + this.city);
                 if (ls[i].city === this.city) {
                     this.isCityAdded = true;
+                    return;
+                } else {
+                    this.isCityAdded = false;
                 }
             }
 
@@ -286,12 +298,14 @@ export default {
         },
     },
     mounted() {
+        // this.called();
+        // this.getWeatherData();
         this.isLoading = true;
         setTimeout(() => {
             this.called();
             this.getWeatherData();
             this.isLoading = false;
-        }, 1000);
+        }, 500);
     },
 };
 </script>

@@ -1,13 +1,13 @@
 <template>
-    <section v-if="cities" class="max-w-screen-lg grid grid-cols-12 gap-5 mx-auto pt-10">
-        <div v-if="weatherData" v-for="city in  weatherData" :class="`col-span-${city.rundom}`"
-            class="relative w-full overflow-hidden whitespace-nowrap flex justify-between items-center px-4 py-3.5 bg-gray-200 rounded-3xl text-gray-700">
+    <section v-if="cities" class="max-w-screen-lg grid grid-cols-6 gap-5 mx-auto pt-10">
+        <div v-if="weatherData" v-for="city in  weatherData"
+            class="relative w-full col-span-6 sm:col-span-3 xl:col-span-2 overflow-hidden whitespace-nowrap flex justify-between items-center px-4 py-3.5 bg-gray-200 rounded-3xl text-gray-700">
             <div class="flex flex-col justify-between gap-3">
                 <h2 @click="previewCity(city)"
-                    :class="checkCharacter(city.city) ? 'text-2xl font-medium' : 'text-3xl font-medium'"
+                    :class="checkCharacter(city.city) ? 'text-xl font-medium' : 'text-2xl font-medium'"
                     class="tracking-tight cursor-pointer">
                     {{ displayContent(city.city) }}
-                    <p :class="checkCharacter(city.city) ? '' : '-mt-1.5'" class="text-base ml-0.5">
+                    <p :class="checkCharacter(city.city) ? '' : '-mt-1.5'" class="text-sm ml-0.5">
                         {{ city.state }}
                     </p>
                 </h2>
@@ -15,35 +15,40 @@
                     {{ Math.round(tempCheck(city.temp)) }}°{{ currentUnit }}
                 </p>
             </div>
-            <div class="flex flex-col items-center gap-2 mt-3 mr-7">
-                <img class="w-16 px-1" :src="getWeatherIconUrl(city.icon)" alt="">
-                <p class="text-sm font-medium capitalize">
+            <div class="flex flex-col items-center gap-2 mr-5 mt-2">
+                <img class="w-14 md:w-16 xl:w-14 px-1" :src="getWeatherIconUrl(city.icon)" alt="">
+                <p class="text-xs md:text-sm xl:text-xs font-medium capitalize">
                     {{ city.disc }}
                 </p>
             </div>
-            <button @click="removeCity(city)" class="absolute right-3 top-3 px-0.5 py-0.5 rounded-full bg-[#85c9c8d8]">
+            <button @click="removeCity(city)"
+                class="absolute right-3 top-3 px-0.5 py-0.5 rounded-full bg-[#85c9c8d8] dark:bg-indigo-800">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4 text-teal-50">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
-        <SkeletonLoader v-if="isLoading" v-for="number in lengthLocalStorage"
-            :class="`col-span-${Math.round(4 + Math.random())}`" class="w-full h-32 rounded-3xl" bg-class="bg-gray-100/50"
+        <SkeletonLoader v-if="isLoading" v-for="n in lengthLocalStorage"
+            class="w-full col-span-6 sm:col-span-3 xl:col-span-2 h-32 rounded-3xl" bg-class="bg-gray-100/50"
             shimmer-color="#85C9C8" />
-        <h1 v-if="lengthLocalStorage === 0"
-            class="text-3xl font-medium tracking-tight text-center text-gray-700 col-span-12 mt-5 mb-10 px-4 py-3.5 bg-gray-200 rounded-3xl">
-            You have no cities added yet. Please add a city to view on the home.
-        </h1>
+        <div class="col-span-6 grid grid-cols-6 gap-4" v-if="lengthLocalStorage === 0">
+            <h1
+                class="text-3xl font-medium tracking-tight text-center text-gray-700 col-span-6 mt-5 mb-10 px-4 py-3.5 bg-gray-200 rounded-3xl">
+                You have no cities added yet. Please add a city to view on the home.
+            </h1>
+            <SkeletonLoader v-for="n in 9" class="col-span-6 sm:col-span-3 xl:col-span-2 w-full h-32 rounded-3xl"
+                bg-class="bg-gray-100/50" shimmer-color="#85C9C8" />
+        </div>
     </section>
 </template>
 
 <script>
 import axios from 'axios';
-import SkeletonLoader from './Skeleton.vue';
+import SkeletonLoader from '../components/Skeleton.vue';
 
 export default {
-    name: "HomeView",
+    name: "Home",
     components: {
         SkeletonLoader,
     },
@@ -121,7 +126,7 @@ export default {
             // console.log(city, state, lat, lng);
 
             this.$router.push({
-                name: 'CityView',
+                name: 'City',
                 params: { city: city, state: state.replaceAll(" ", "") },
                 query: { lat, lng },
             });
@@ -131,7 +136,7 @@ export default {
             setTimeout(() => {
                 this.getLocalStorage();
                 this.isLoading = false;
-            }, 1000);
+            }, 500);
         },
         removeCity(city) {
             console.log(city.city);
@@ -139,6 +144,8 @@ export default {
             currentCities = currentCities.filter(c => c.city !== city.city);
             localStorage.setItem('cities', JSON.stringify(currentCities));
             this.weatherData = [];
+            this.lengthLocalStorage = currentCities.length;
+            // this.getLocalStorage();
             this.timeOut();
         },
         checkCharacter(char) {
