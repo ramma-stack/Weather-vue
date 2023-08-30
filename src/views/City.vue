@@ -89,14 +89,15 @@
                 </p>
                 <button @click="toggleCity(cityToAdd)"
                     class="mb-4 tracking-tight bg-teal-50/80 text-gray-800 font-medium text-lg px-3 py-px rounded-full xl:mb-6">
-                    <span v-if="isCityAdded" class="flex items-center justify-center gap-1">
+                    <!-- <span v-if="isCityAdded" class="flex items-center justify-center gap-1">
                         <BookmarkSlashIcon class="w-5 h-5" />
                         {{ buttonText }}
                     </span>
                     <span v-else class="flex items-center justify-center gap-1">
                         <BookmarkSquareIcon class="w-5 h-5" />
                         {{ buttonText }}
-                    </span>
+                    </span> -->
+                    {{ buttonText }}
                 </button>
             </div>
         </div>
@@ -203,7 +204,7 @@ export default {
             return `/assets/images/weather/${iconCode}.svg`; // Point to local image in the public/images folder
         },
         toggleCity(cityName) {
-            const existingCity = this.cities.find(city => city.city === cityName);
+            const existingCity = this.cities.find(cityObj => cityObj.city === cityName);
             if (!existingCity) {
                 const newCity = {
                     id: this.generateRandomId(),
@@ -239,19 +240,16 @@ export default {
             this.lat = this.$route.query.lat;
             this.lng = this.$route.query.lng;
 
-            const ls = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
-            for (let i = 0; i < ls.length; i++) {
+            this.cities = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
+            for (let i = 0; i < this.cities.length; i++) {
                 // console.log(ls[i].city + '===' + this.city);
-                if (ls[i].city === this.city) {
+                if (this.cities[i].city === this.city) {
                     this.isCityAdded = true;
                     return;
                 } else {
                     this.isCityAdded = false;
                 }
             }
-
-            // this.isCityAdded = localStorage.getItem('cities', JSON.stringify(this.storedCities)) ? true : false;
-            this.cities = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
         },
         checkCharacter(char) {
             const kurdishUnicodeRanges = [
