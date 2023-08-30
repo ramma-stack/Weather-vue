@@ -6,8 +6,8 @@
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-teal-50">
                 <!-- Modal header -->
-                <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-teal-600">
-                    <h3 class="text-xl font-semibold text-gray-900">
+                <div class="flex items-start justify-between p-3 border-b rounded-t dark:border-teal-600">
+                    <h3 class="text-xl font-semibold text-gray-800">
                         Terms of Service
                     </h3>
                     <button type="button" @click="$emit('close')"
@@ -22,23 +22,15 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-6 space-y-6">
+                <div class="p-5 space-y-6">
                     <p class="text-base leading-relaxed text-gray-500">
-                        With less than a month to go before the European Union enacts new consumer privacy laws
-                        for its citizens, companies around the world are updating their terms of service
-                        agreements to comply.
-                    </p>
+                        Check out the list of cities on the main website. You would like to see the weather of a city where
+                        you can save the city to your favorites list. That means you can see the weather in your favorite
+                        city on the homepage. </p>
                     <p class="text-base leading-relaxed text-gray-500">
-                        The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on
-                        May 25 and is meant to ensure a common set of data rights in the European Union. It
-                        requires organizations to notify users as soon as possible of high-risk data breaches
-                        that could personally affect them.
+                        If you want to see the weather for a city that is not listed, you can add it by searching for the
+                        name and clicking add city.
                     </p>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex items-center p-6 space-x-2 border-t border-teal-200 rounded-b dark:border-teal-600">
-                    <button type="button" @click="$emit('close')"
-                        class="text-teal-500 bg-white hover:bg-teal-100 focus:ring-4 focus:outline-none focus:ring-teal-300 rounded-lg duration-100 text-sm font-medium px-5 py-2.5 hover:text-teal-800 focus:z-10 dark:bg-teal-600 dark:text-white dark:hover:text-white dark:hover:bg-teal-500 dark:focus:ring-teal-600">Decline</button>
                 </div>
             </div>
         </div>

@@ -37,11 +37,8 @@
                                         class="h-10 w-10">
                                 </div>
                                 <div class="flex items-center space-x-4">
-                                    <h1 v-if="temp === 'F'" class="text-base">
-                                        {{ Math.round(hour.temp) }}°F
-                                    </h1>
-                                    <h1 v-else class="text-base">
-                                        {{ Math.round((hour.temp - 32) * 5 / 9) }}°C
+                                    <h1 class="text-base">
+                                        {{ Math.round(tempCheck(hour.temp)) }}°{{ currentUnit }}
                                     </h1>
                                 </div>
                             </div>
@@ -70,11 +67,8 @@
                                     <img :src="getWeatherIconUrl(day.weather[0].icon)" alt="Weather Icon" class="h-10 w-10">
                                 </div>
                                 <div class="flex items-center space-x-4">
-                                    <h1 v-if="temp === 'F'" class="text-lg font-semibold">
-                                        {{ Math.round(day.temp.max) }}°F
-                                    </h1>
-                                    <h1 v-else class="text-lg font-semibold">
-                                        {{ Math.round((day.temp.max - 32) * 5 / 9) }}°C
+                                    <h1 class="text-lg font-semibold">
+                                        {{ Math.round(tempCheck(day.temp.max)) }}°{{ currentUnit }}
                                     </h1>
                                 </div>
                             </div>
@@ -87,17 +81,10 @@
                 <img class="mx-auto mb-7 sm:max-w-sm lg:w-72" :src="getWeatherIconUrl(weatherData.current.weather[0].icon)"
                     alt="feature image">
                 <div class="font-medium tracking-tight text-teal-50 text-3xl flex items-end gap-7">
-                    <h2 v-if="temp === 'F'"
+                    <h2 v-if="isCelsius === false"
                         class="inline text-3xl font-bold tracking-tight text-teal-50 sm:text-9xl p-0 m-0">
-                        {{ Math.round(weatherData.current.temp) }}°F
+                        {{ Math.round(tempCheck(weatherData.current.temp)) }}°{{ currentUnit }}
                     </h2>
-                    <h2 v-else class="inline text-3xl font-bold tracking-tight text-teal-50 sm:text-9xl p-0 m-0">
-                        {{ Math.round((weatherData.current.temp - 32) * 5 / 9) }}°C
-                    </h2>
-                    <button @click="tempChange"
-                        class="mb-6 bg-teal-50/80 text-teal-500/50 text-4xl rounded-full p-2 px-2.5 pb-1">
-                        °{{ temp === 'F' ? 'C' : 'F' }}
-                    </button>
                 </div>
                 <p class="mb-4 tracking-tight text-teal-50 text-4xl xl:mb-6 capitalize">
                     {{ weatherData.current.weather[0].description }}
@@ -153,18 +140,18 @@ export default {
             lat: null,
             lng: null,
             weatherData: null,
-            temp: 'F', // 'F' or 'C
             cityToAdd: '',
             isCityAdded: false,
             cities: [],
             isLoading: false,
+            isCelsius: false,
         };
     },
     methods: {
         getWeatherData() {
             try {
                 // Fetch weather data using lat and lng
-                const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.lat}&lon=${this.lng}&exclude={part}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`;
+                const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.lat}&lon=${this.lng}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8&units=imperial`;
                 // const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${this.lat}&lon=${this.lng}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8&units=imperial`;
 
                 axios.get(apiUrl)
@@ -225,11 +212,7 @@ export default {
             this.isCityAdded = !this.isCityAdded;
         },
         tempChange() {
-            if (this.temp === 'F') {
-                this.temp = 'C';
-            } else {
-                this.temp = 'F';
-            }
+            this.isCelsius = true;
         },
         saveCitiesToLocalStorage() {
             localStorage.setItem('cities', JSON.stringify(this.cities));
@@ -268,7 +251,14 @@ export default {
             const charCode = char.charCodeAt(0);
 
             return kurdishUnicodeRanges.some(([start, end]) => charCode >= start && charCode <= end);
-        }
+        },
+        tempCheck(temps) {
+            if (this.currentUnit === 'C') {
+                return (temps - 32) * 5 / 9;
+            } else {
+                return temps;
+            }
+        },
     },
     computed: {
         iconStyle() {
@@ -283,6 +273,9 @@ export default {
         buttonText() {
             return this.isCityAdded ? 'Remove City' : 'Add City';
         },
+        currentUnit() {
+            return this.$store.state.localStorageValue;
+        }
     },
     watch: {
         $route(to, from) {

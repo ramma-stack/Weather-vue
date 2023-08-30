@@ -12,7 +12,7 @@
                     </p>
                 </h2>
                 <p class="tracking-tight font-medium text-4xl leading-none -mb-1">
-                    {{ Math.round(city.temp) }}&deg;F
+                    {{ Math.round(tempCheck(city.temp)) }}°{{ currentUnit }}
                 </p>
             </div>
             <div class="flex flex-col items-center gap-2 mt-3 mr-7">
@@ -67,7 +67,8 @@ export default {
         getWeatherData(lat, lng, city, state) {
             try {
                 // Fetch weather data using lat and lng
-                const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude={part}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`;
+                const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lng}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8&units=imperial`;
+                // const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude={part}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`;
                 // const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${this.lat}&lon=${this.lng}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8&units=imperial`;
 
                 axios.get(apiUrl)
@@ -150,12 +151,26 @@ export default {
             const charCode = char.charCodeAt(0);
 
             return kurdishUnicodeRanges.some(([start, end]) => charCode >= start && charCode <= end);
+        },
+        tempCheck(temp) {
+            // console.log(this.isCelsius);
+            if (this.currentUnit === 'C') {
+                return (temp - 32) * 5 / 9;
+            } else {
+                return temp;
+            }
+        },
+    },
+    computed: {
+        currentUnit() {
+            return this.$store.state.localStorageValue;
         }
     },
     mounted() {
         // get length local storage
         this.lengthLocalStorage = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))).length;
         this.timeOut();
+        // console.log(this.$store.state.localStorageValue);
     },
 }
 </script>

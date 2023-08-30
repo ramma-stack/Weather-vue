@@ -1,14 +1,11 @@
 <template>
   <div class="bg-[#85C9C8] text-teal-50 min-h-screen w-full p-3 md:p-5 font-custom">
-    <!-- <HelloWorld /> -->
-    <!-- <Test /> -->
-    <Navigation />
+    <Navigation @temperature-unit-change="updateTemperatureUnit" />
     <RouterView v-slot="{ Component }">
-      <Transition name="page">
+      <Transition name="page" mode="out-in">
         <component :is="Component" />
       </Transition>
     </RouterView>
-    <!-- <DropDown /> -->
   </div>
 </template>
 
@@ -23,15 +20,29 @@ import DropDown from './components/DropDown.vue';
 export default {
   name: 'App',
   components: { Navigation, HelloWorld, Test, CityView, DropDown },
+  data() {
+    return {
+      isCelsius: false
+    }
+  },
+  methods: {
+    updateTemperatureUnit(newUnit) {
+      // this.isCelsius = true;
+      // console.log("newUnit");
+      // console.log(this.isCelsius);
+    }
+  },
 }
 </script>
 
-<style scoped>
-.page-enter-active {
-  transition: 600ms ease all;
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition: 500ms ease all;
 }
 
-.page-enter-from {
+.page-enter-from,
+.page-leave-to {
   opacity: 0;
 }
 </style>

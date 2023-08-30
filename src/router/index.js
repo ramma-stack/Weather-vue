@@ -2,6 +2,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import CityView from '../components/CityView.vue';
 import HomeView from '../components/HomeView.vue';
+import About from '../components/About.vue';
 
 const routes = createRouter({
   history: createWebHistory(),
@@ -24,7 +25,11 @@ const routes = createRouter({
     },
     {
       path: "/about",
-      name: "AboutView",
+      name: "About",
+      component: About,
+      meta: {
+        title: "About",
+      },
     }
   ],
 });

@@ -1,8 +1,12 @@
 import { createApp } from 'vue'
-import './style.css'
+import store from './store'
 import App from './App.vue'
 import router from './router'
+import './style.css'
 
-createApp(App)
-    .use(router)
-    .mount('#app')
+const app = createApp(App)
+
+// Install the store instance as a plugin
+app.use(store)
+app.use(router)
+app.mount('#app')

@@ -78,150 +78,82 @@
                 </svg>
             </button>
         </div>
-        <div class="relative items-center justify-between hidden w-full md:flex md:w-auto md:order-2" id="navbar-search">
-            <div class="relative mt-3 md:hidden">
-                <div class="relative mt-3 md:hidden">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-teal-500 dark:text-teal-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </div>
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-teal-500 dark:text-teal-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </div>
-                    <input type="text" id="search-navbar" v-model="searchQuery"
-                        class="block w-full p-2 pl-10 text-sm text-teal-900 border border-teal-300 rounded-lg bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
-                        placeholder="Search...">
-                </div>
-                <ul class="absolute top-0 left-0 z-50 text-white w-full bg-gray-800 py-2 px-1 border-t border-gray-700"
-                    v-if="mapBoxSearchResults && searchQuery != ''">
-                    <p class="flex items-center gap-2 py-2 px-5" v-if="searchError">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.182 16.318A4.486 4.486 0 0012.016 15a4.486 4.486 0 00-3.198 1.318M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
-                        </svg>
-                        Sorry, something went wrong, please try again.
-                    </p>
-                    <p class="flex items-center gap-2 py-2 px-5"
-                        v-if="!searchError && mapBoxSearchResults.length === 0 && searchQuery != ''">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                            <path fill-rule="evenodd"
-                                d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        No results match your query, try a different term.
-                    </p>
-                    <template v-else>
-                        <li v-for="searchResult in mapBoxSearchResults" @click="previewCity(searchResult)"
-                            class="py-2 px-5 cursor-pointer">
-                            {{ searchResult.place_name }}
-                        </li>
-                    </template>
-                </ul>
-            </div>
-            <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:space-x-8 md:mt-0">
-                <li>
-                    <router-link to="/"
-                        class="block py-2 pl-3 pr-4 text-teal-50 duration-200 font-light rounded md:bg-transparent md:p-0 underline">
-                        Home
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/about"
-                        class="block py-2 pl-3 pr-4 text-teal-50 duration-200 font-normal rounded hover:bg-teal-100 md:hover:bg-transparent md:hover:text-teal-700 md:p-0">
-                        About
-                    </router-link>
-                </li>
-            </ul>
-        </div>
+        <router-link to="/"
+            class="flex items-center md:order-2 p-2 w-10 h-10 justify-center text-sm text-teal-500 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-200 duration-200 dark:text-teal-50 dark:hover:bg-teal-700 dark:hover:text-teal-400 dark:focus:ring-teal-700">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                <path
+                    d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                <path
+                    d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+            </svg>
+        </router-link>
         <Transition>
             <Modal v-if="showModal" @close="showModal = false" />
         </Transition>
         <button @click="showModal = true"
-            class="flex items-center md:order-2 p-2 mr-2 ml-5 w-10 h-10 justify-center text-sm text-teal-500 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-200 duration-200 dark:text-teal-50 dark:hover:bg-teal-700 dark:hover:text-teal-400 dark:focus:ring-teal-700">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+            class="flex items-center md:order-2 p-2 mx-2 justify-center text-sm text-teal-500 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-200 duration-200 dark:text-teal-50 dark:hover:bg-teal-700 dark:hover:text-teal-400 dark:focus:ring-teal-700">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                 <path fill-rule="evenodd"
                     d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
                     clip-rule="evenodd" />
             </svg>
         </button>
-        <Menu as="div" class="relative flex items-center md:order-2">
-            <div>
-                <MenuButton
-                    class="inline-flex w-full justify-center p-2.5 text-sm font-medium text-teal-500 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-200 duration-200 dark:text-teal-50 dark:hover:bg-teal-700 dark:hover:text-teal-400 dark:focus:ring-teal-700">
-                    <Cog6ToothIcon class="h-5 w-5" aria-hidden="true" />
-                </MenuButton>
-            </div>
+        <Popover v-slot="{ open }" class="relative flex md:order-2">
+            <PopoverButton :class="open ? '' : 'text-opacity-90'"
+                class="group inline-flex items-center p-2 text-teal-500 rounded-lg hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-200 duration-200 dark:text-teal-50 dark:hover:bg-teal-700 dark:hover:text-teal-400 dark:focus:ring-teal-700">
+                <Cog6ToothIcon class="h-6 w-6" aria-hidden="true" />
+            </PopoverButton>
 
-            <transition enter-active-class="transition duration-100 ease-out"
-                enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
-                leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
-                leave-to-class="transform scale-95 opacity-0">
-                <MenuItems
-                    class="absolute right-0 top-9 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div class="px-1 py-1">
-                        <MenuItem v-slot="{ active }">
-                        <button :class="[
-                            active ? 'bg-teal-500 text-white' : 'text-gray-900',
-                            'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                        ]">
-                            <PencilIcon :active="active" class="mr-2 h-5 w-5 text-teal-400" aria-hidden="true" />
-                            Edit
-                        </button>
-                        </MenuItem>
-                        <MenuItem v-slot="{ active }">
-                        <button :class="[
-                            active ? 'bg-teal-500 text-white' : 'text-gray-900',
-                            'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                        ]">
-                            <DocumentDuplicateIcon :active="active" class="mr-2 h-5 w-5 text-teal-400"
-                                aria-hidden="true" />
-                            Duplicate
-                        </button>
-                        </MenuItem>
+            <transition enter-active-class="transition duration-200 ease-out" enter-from-class="translate-y-1 opacity-0"
+                enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-150 ease-in"
+                leave-from-class="translate-y-0 opacity-100" leave-to-class="translate-y-1 opacity-0">
+                <PopoverPanel v-slot="{ close }" class="absolute right-0 top-10 z-10 mt-3 w-60 px-4 sm:px-0">
+                    <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700 bg-white">
+                            <li>
+                                <div class="group flex p-2 rounded hover:bg-gray-100 dark:hover:bg-teal-600">
+                                    <router-link to="/about" @click="accept(close)"
+                                        class="relative inline-flex items-center w-full text-teal-600 cursor-pointer">
+                                        <UserCircleIcon class="w-6 h-6 group-hover:text-white" />
+                                        <span class="ml-3 text-sm font-semibold group-hover:text-white">About
+                                            Us</span>
+                                    </router-link>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group flex p-2 rounded hover:bg-gray-100 dark:hover:bg-teal-600">
+                                    <label class="relative inline-flex items-center w-full cursor-pointer">
+                                        <input type="checkbox" v-model="isCelsius" @change="updateTemperatureUnit"
+                                            class="sr-only peer">
+                                        <div
+                                            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-teal-700">
+                                        </div>
+                                        <span
+                                            class="ml-3 text-sm font-semibold text-gray-900 dark:text-teal-600 group-hover:text-white">
+                                            Fahrenheit Temp
+                                        </span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group flex p-2 rounded hover:bg-gray-100 dark:hover:bg-teal-600">
+                                    <label class="relative inline-flex items-center w-full cursor-pointer">
+                                        <input type="checkbox" value="" class="sr-only peer">
+                                        <div
+                                            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-teal-700">
+                                        </div>
+                                        <span
+                                            class="ml-3 text-sm font-semibold text-gray-900 dark:text-teal-600 group-hover:text-white">
+                                            Dark Mode
+                                        </span>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="px-1 py-1">
-                        <MenuItem v-slot="{ active }">
-                        <button :class="[
-                            active ? 'bg-teal-500 text-white' : 'text-gray-900',
-                            'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                        ]">
-                            <ArchiveBoxIcon :active="active" class="mr-2 h-5 w-5 text-teal-400" aria-hidden="true" />
-                            Archive
-                        </button>
-                        </MenuItem>
-                        <MenuItem v-slot="{ active }">
-                        <button :class="[
-                            active ? 'bg-teal-500 text-white' : 'text-gray-900',
-                            'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                        ]">
-                            <ArrowTopRightOnSquareIcon :active="active" class="mr-2 h-5 w-5 text-teal-400"
-                                aria-hidden="true" />
-                            Move
-                        </button>
-                        </MenuItem>
-                    </div>
-                    <div class="px-1 py-1">
-                        <MenuItem v-slot="{ active }">
-                        <button :class="[
-                            active ? 'bg-teal-500 text-white' : 'text-gray-900',
-                            'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                        ]">
-                            <TrashIcon :active="active" class="mr-2 h-5 w-5 text-teal-400" aria-hidden="true" />
-                            Delete
-                        </button>
-                        </MenuItem>
-                    </div>
-                </MenuItems>
+                </PopoverPanel>
             </transition>
-        </Menu>
+        </Popover>
     </nav>
 </template>
 
@@ -275,16 +207,23 @@ export default {
                 return text;
             }
         },
-        toggleDropdown() {
-            this.isOpen = !this.isOpen;
+        updateTemperatureUnit() {
+            this.$store.commit('updateLocalStorageValue');
         },
     },
     mounted() {
-        document.addEventListener("click", this.handleClickOutside);
+        // create local storage for tempreture type
+        const temp = localStorage.getItem("temperatureUnit");
+        if (temp === "F") {
+            this.isCelsius = true;
+        } else {
+            this.isCelsius = false;
+        }
     },
-    beforeDestroy() {
-        // Remove the click event listener when the component is destroyed
-        document.removeEventListener('click', this.handleClickOutside);
+    computed: {
+        localStorageValue() {
+            return this.$store.state.localStorageValue
+        },
     },
     watch: {
         searchQuery() {
@@ -294,13 +233,13 @@ export default {
 }
 </script>
 <script setup>
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { Cog6ToothIcon } from '@heroicons/vue/20/solid'
-import { ArchiveBoxIcon } from '@heroicons/vue/20/solid'
-import { DocumentDuplicateIcon } from '@heroicons/vue/20/solid'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/20/solid'
-import { PencilIcon } from '@heroicons/vue/20/solid'
-import { TrashIcon } from '@heroicons/vue/20/solid'
+import { UserCircleIcon } from '@heroicons/vue/20/solid'
+
+async function accept(close) {
+    close()
+}
 </script>
 
 <style scoped>
