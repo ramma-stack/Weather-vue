@@ -1,11 +1,11 @@
 <template>
-    <section class="max-w-screen-lg items-center mx-auto pt-10 md:pt-16 lg:pt-24">
+    <section class="max-w-screen-lg items-center mx-auto pt-10 md:pt-16 lg:pt-20">
         <div v-if="weatherData" class="flex flex-wrap items-center gap-5 lg:gap-0 -mx-3">
             <div class="order-1 w-full px-3 lg:w-4/6 lg:order-0">
-                <div class="flex flex-col gap-10 w-full lg:max-w-md whitespace-nowrap">
+                <div class="flex flex-col gap-10 w-full lg:max-w-md">
                     <div class="flex flex-col items-center lg:items-start">
-                        <h2 :class="checkCharacter(city) ? 'font-semibold text-4xl sm:text-8xl mb-8' : 'font-bold text-5xl sm:text-9xl'"
-                            class="leading-tight tracking-tight text-teal-50 font-heading">
+                        <h2 :class="checkCharacter(city) ? 'font-semibold text-4xl sm:text-8xl mb-8' : 'font-bold text-5xl sm:text-8xl'"
+                            class="leading-tight tracking-tight text-teal-50 font-heading text-center lg:text-start">
                             {{ city }}
                         </h2>
                         <p class="tracking-tight text-teal-50 text-3xl sm:text-5xl xl:mb-6">
