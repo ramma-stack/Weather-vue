@@ -56,7 +56,7 @@
                         </div>
                         <div class="flex flex-wrap sm:flex-nowrap gap-4">
                             <div v-for="(day, index) in weatherData.daily.slice(0, 7)" :key="index"
-                                class="flex flex-col items-center bg-teal-50/40 text-[#85C9C8] dark:text-white p-3 rounded-full">
+                                class="flex flex-col items-center bg-teal-50/40 text-white p-3 rounded-full">
                                 <div class="flex items-center space-x-4 mb-4">
                                     <div class="text-lg font-semibold">
                                         {{ formatDate(day.dt, 'S_H') }}
