@@ -200,7 +200,7 @@ export default {
             }
         },
         getWeatherIconUrl(iconCode) {
-            return `../../public/assets/images/weather/${iconCode}.svg`; // Point to local image in the public/images folder
+            return `/assets/images/weather/${iconCode}.svg`; // Point to local image in the public/images folder
         },
         toggleCity(cityName) {
             const existingCity = this.cities.find(city => city.city === cityName);
