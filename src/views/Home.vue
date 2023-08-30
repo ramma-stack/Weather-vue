@@ -34,7 +34,7 @@
             shimmer-color="#85C9C8" />
         <div class="col-span-6 grid grid-cols-6 gap-4" v-if="lengthLocalStorage === 0">
             <h1
-                class="text-3xl font-medium tracking-tight text-center text-gray-700 col-span-6 mt-5 mb-10 px-4 py-3.5 bg-gray-200 rounded-3xl">
+                class="text-xl lg:text-3xl font-medium tracking-tight text-center text-gray-700 col-span-6 mt-5 mb-10 px-4 py-3.5 bg-gray-200 rounded-3xl">
                 You have no cities added yet. Please add a city to view on the home.
             </h1>
             <SkeletonLoader v-for="n in 9" class="col-span-6 sm:col-span-3 xl:col-span-2 w-full h-32 rounded-3xl"
