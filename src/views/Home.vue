@@ -109,7 +109,7 @@ export default {
             }
         },
         getWeatherIconUrl(iconCode) {
-            return `../../public/assets/images/weather/${iconCode}.svg`; // Point to local image in the public/images folder
+            return `/assets/images/weather/${iconCode}.svg`; // Point to local image in the public/images folder
         },
         getLocalStorage() {
             let currentCities = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
