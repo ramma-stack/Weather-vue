@@ -23,7 +23,7 @@
                             clip-rule="evenodd" />
                     </svg>
                 </button>
-                <input type="text" id="search-navbar" v-model="searchQuery" @focus="disableZoom"
+                <input type="text" id="search-navbar" v-model="searchQuery" @focus="disableZoom" @blur="enableZoom"
                     class="block w-full p-2 pt-2.5 pl-16 pr-10 text-base font-medium text-teal-900 border border-teal-300 dark:border-indigo-800 rounded-full placeholder:text-gray-800 placeholder:text-lg bg-teal-50 focus:ring-teal-600 focus:border-teal-500"
                     placeholder="search cities...">
                 <ul class="absolute top-[45px] left-5 z-50 w-11/12 text-[#347f7e] dark:text-indigo-900 font-medium bg-teal-50 py-2 px-1 border-2 border-t-0 border-teal-500 dark:border-indigo-800 rounded-b-xl shadow"
@@ -169,7 +169,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </button>
-                                    <input type="text" id="search-navbar" v-model="searchQuery" @focus="disableZoom"
+                                    <input type="text" id="search-navbar" v-model="searchQuery" @focus="disableZoom" @blur="enableZoom"
                                         class="block w-full p-1 pt-1.5 pl-10 pr-10 text-sm font-medium text-teal-900 border border-teal-300 dark:border-indigo-800 rounded-full placeholder:text-gray-800 placeholder:text-sm bg-teal-50 focus:ring-teal-600 focus:border-teal-500"
                                         placeholder="search cities...">
                                 </div>
@@ -284,7 +284,10 @@ export default {
         },
         disableZoom() {
             document.body.style.zoom = 'reset'; // or any other value you want to use
-        }
+        },
+        enableZoom() {
+            document.body.style.zoom = ''; // or any other value you want to use
+        },
     },
     mounted() {
         // create local storage for tempreture type
