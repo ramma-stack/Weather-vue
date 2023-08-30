@@ -2,19 +2,19 @@
     <section class="max-w-screen-lg gap-5 mx-auto pt-10">
         <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
             <div class="mx-auto mb-8 max-w-screen-md lg:mb-16">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Our team</h2>
-                <p class="font-light text-gray-500 sm:text-xl dark:text-gray-100">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Our team</h2>
+                <p class="font-light text-gray-100 sm:text-xl dark:text-gray-100">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium sunt officiis, dolorum earum iusto
                     perferendis quaerat impedit! Beatae expedita, numquam, consectetur pariatur aut excepturi velit
                     distinctio ipsa provident ab vero?
                 </p>
             </div>
             <div class="grid items-center justify-center gap-8 lg:gap-16 sm:grid-cols-2">
-                <div class="text-center text-gray-500 dark:text-gray-100">
+                <div class="text-center text-gray-100 dark:text-gray-100">
                     <img class="mx-auto mb-4 w-36 h-36 rounded-full"
                         src="../../public/assets/images/profile/Ramyar.png"
                         alt="Bonnie Avatar">
-                    <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    <h3 class="mb-1 text-2xl font-bold tracking-tight text-white">
                         Ramyar Rebwar
                     </h3>
                     <p>
@@ -58,15 +58,15 @@
                         </li>
                     </ul>
                 </div>
-                <div class="text-center text-gray-500 dark:text-gray-100">
+                <div class="text-center text-gray-100 dark:text-gray-100">
                     <img class="mx-auto mb-4 w-36 h-36 rounded-full"
                         src="../../public/assets/images/profile/Shadyar.png"
                         alt="Helene Avatar">
-                    <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-100 dark:text-white">
                         Shadyar Omed
                     </h3>
                     <p>
-                        UI/UX Designer
+                        UX/Ui Designer
                     </p>
                     <ul class="flex justify-center mt-4 space-x-4">
                         <li>
