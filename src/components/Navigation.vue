@@ -258,7 +258,7 @@ export default {
 
             this.$router.push({
                 name: 'City',
-                params: { city: city, state: state.replaceAll(" ", "") },
+                params: { city: city, state: state ? state.replaceAll(" ", "") : 'None' },
                 query: { lat, lng },
             });
         },
