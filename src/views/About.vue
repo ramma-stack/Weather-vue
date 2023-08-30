@@ -2,7 +2,7 @@
     <section class="max-w-screen-lg gap-5 mx-auto pt-10">
         <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
             <div class="mx-auto mb-8 max-w-screen-md lg:mb-16">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Our team</h2>
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Our Team</h2>
                 <p class="font-light text-gray-100 sm:text-xl dark:text-gray-100">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium sunt officiis, dolorum earum iusto
                     perferendis quaerat impedit! Beatae expedita, numquam, consectetur pariatur aut excepturi velit
