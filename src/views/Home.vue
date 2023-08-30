@@ -175,7 +175,11 @@ export default {
     },
     mounted() {
         // get length local storage
-        this.lengthLocalStorage = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))).length;
+        try {
+            this.lengthLocalStorage = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))).length ?? 0;
+        } catch (error) {
+            this.lengthLocalStorage = 0;
+        }
         this.timeOut();
         // console.log(this.$store.state.localStorageValue);
     },
