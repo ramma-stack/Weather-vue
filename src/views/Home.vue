@@ -1,6 +1,6 @@
 <template>
     <section v-if="cities" class="max-w-screen-lg grid grid-cols-6 gap-5 mx-auto pt-10">
-        <div v-if="weatherData" v-for="city in  weatherData"
+        <div v-if="weatherData" v-for="city in weatherData.sort((a, b) => b.rundom - a.rundom)" :key="city.rundom"
             class="relative w-full col-span-6 sm:col-span-3 xl:col-span-2 overflow-hidden whitespace-nowrap flex justify-between items-center px-4 py-3.5 bg-gray-200 rounded-3xl text-gray-700">
             <div class="flex flex-col justify-between gap-3">
                 <h2 @click="previewCity(city)"
@@ -69,7 +69,7 @@ export default {
         }
     },
     methods: {
-        getWeatherData(lat, lng, city, state) {
+        getWeatherData(lat, lng, city, state, id) {
             try {
                 // Fetch weather data using lat and lng
                 const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lng}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8&units=imperial`;
@@ -89,7 +89,7 @@ export default {
                             icon: weatherData.current.weather[0].icon,
                             temp: weatherData.current.temp,
                             disc: weatherData.current.weather[0].description,
-                            rundom: Math.round(4 + Math.random()),
+                            rundom: id,
                         });
 
                     })
@@ -113,9 +113,10 @@ export default {
         },
         getLocalStorage() {
             let currentCities = JSON.parse(localStorage.getItem('cities', JSON.stringify(this.storedCities))) || [];
-            currentCities.forEach(element => {
-                this.getWeatherData(element.lat, element.lng, element.city, element.state);
-            });
+            // using for loop for currentCities
+            for (let i = 0; i < currentCities.length; i++) {
+                this.getWeatherData(currentCities[i].lat, currentCities[i].lng, currentCities[i].city, currentCities[i].state, i + 1);
+            }
         },
         previewCity(value) {
             const city = value.city;
