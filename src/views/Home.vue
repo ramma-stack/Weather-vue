@@ -22,9 +22,8 @@
                 </p>
             </div>
         </div>
-        <SkeletonLoader v-if="isLoading"
-            class="w-full col-span-6 sm:col-span-3 xl:col-span-2 h-[7.5rem] rounded-3xl" bg-class="bg-gray-100/50"
-            shimmer-color="#85C9C8" />
+        <SkeletonLoader v-if="isLoading" class="w-full col-span-6 sm:col-span-3 xl:col-span-2 h-[7.5rem] rounded-3xl"
+            bg-class="bg-gray-100/50" shimmer-color="#85C9C8" />
         <div v-if="weatherData" v-for="city in weatherData.sort((a, b) => b.rundom - a.rundom)" :key="city.rundom"
             class="relative w-full col-span-6 sm:col-span-3 xl:col-span-2 overflow-hidden whitespace-nowrap flex justify-between items-center px-4 py-3.5 bg-gray-200 rounded-3xl text-gray-700">
             <div class="flex flex-col justify-between gap-3">
@@ -194,45 +193,39 @@ export default {
                 return temp;
             }
         },
-        getLocation() {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        console.log("Latitude:", latitude);
-                        console.log("Longitude:", longitude);
+        async getLocation() {
+            const apiKey = "e9947fa5a57441408d030dd09ff5731a"; // Replace with your actual API key
+            let apiUrl = `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}`;
 
-                        // You can now use the latitude and longitude as needed.
-                        // Fetch weather data using lat and lng
-                        const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8&units=imperial`;
-                        axios.get(apiUrl)
-                            .then(response => {
-                                // Handle the data from the API response
-                                const weatherData = response.data;
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                const latitude = data.latitude;
+                const longitude = data.longitude;
 
-                                this.currentLocation = [];
-                                this.currentLocation.push({
-                                    city: weatherData.timezone.split('/')[1].replaceAll("_", " "),
-                                    state: weatherData.timezone.split('/')[0].replaceAll("_", " "),
-                                    lat: weatherData.lat,
-                                    lng: weatherData.lon,
-                                    icon: weatherData.current.weather[0].icon,
-                                    temp: weatherData.current.temp,
-                                    disc: weatherData.current.weather[0].description,
-                                });
-                                console.log(this.currentLocation);
-                            })
-                            .catch(error => {
-                                console.error('Error fetching weather data:', error);
-                            });
-                    },
-                    (error) => {
-                        console.error("Error getting location:", error.message);
-                    }
-                );
-            } else {
-                console.error("Geolocation is not available in this browser.");
+                apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude={part}&appid=455e7075a8fe4a762b32573a53b9a0e8&units=imperial`;
+                axios.get(apiUrl)
+                    .then(response => {
+                        // Handle the data from the API response
+                        const weatherData = response.data;
+
+                        this.currentLocation = [];
+                        this.currentLocation.push({
+                            city: weatherData.timezone.split('/')[1].replaceAll("_", " "),
+                            state: weatherData.timezone.split('/')[0].replaceAll("_", " "),
+                            lat: weatherData.lat,
+                            lng: weatherData.lon,
+                            icon: weatherData.current.weather[0].icon,
+                            temp: weatherData.current.temp,
+                            disc: weatherData.current.weather[0].description,
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching weather data:', error);
+                    });
+
+            } catch (error) {
+                console.error("Error fetching location:", error);
             }
         },
     },
@@ -248,7 +241,6 @@ export default {
         } catch (error) {
             this.lengthLocalStorage = 0;
         }
-        // this.getLocation();
         this.timeOut();
     },
 }
