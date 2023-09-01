@@ -36,9 +36,9 @@ To get started with WeatherWorld, follow these steps:
    - Sign up for API keys from [OpenWeatherMap](https://openweathermap.org/), [Mapbox](https://www.mapbox.com/), and [IPGeolocation](https://ipgeolocation.io/).
    - Add your API keys to the respective configuration files.
 
-4. Start the development server: `npm run serve`
+4. Start the development server: `npm run dev`
 
-5. Open your browser and navigate to `http://localhost:8080` to see WeatherWorld in action!
+5. Open your browser and navigate to `http://localhost:5173` to see WeatherWorld in action!
 
 ## Feedback
 
