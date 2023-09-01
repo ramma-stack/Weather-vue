@@ -38,7 +38,7 @@ routes.beforeEach((to, from, next) => {
   document.title = `${to.params.state
     ? `${to.params.city}, ${to.params.state}`
     : to.meta.title
-    } | The Local Weather`;
+    } | WithWeather`;
   next();
 });
 
