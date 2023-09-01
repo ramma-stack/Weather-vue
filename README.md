@@ -1,4 +1,4 @@
-# WeatherWorld - Your Global Weather Dashboard
+# WithWeather - Global Weather
 
 ![WeatherWorld Preview](link-to-your-project-image)
 
