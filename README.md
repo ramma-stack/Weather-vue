@@ -30,7 +30,7 @@ WeatherWorld is a web application built with Vue.js 3 and styled with Tailwind C
 
 To get started with WeatherWorld, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/weather-world.git`
+1. Clone the repository: `https://github.com/ramma-stack/Weather-vue.git`
 
 2. Install dependencies: `npm install`
 
@@ -52,6 +52,6 @@ WeatherWorld is open-source and released under the [MIT License](LICENSE).
 
 ## Feedback
 
-If you have any feedback, suggestions, or issues to report, please feel free to [create an issue](https://github.com/your-username/weather-world/issues) or [contact us](mailto:your-email@example.com).
+If you have any feedback, suggestions, or issues to report, please feel free to [contact us](mailto:ramear11@gmail.com).
 
-Enjoy exploring the weather worldwide with WeatherWorld! 🌍☀️🌧️
+Enjoy exploring the weather worldwide with WithWeather! 🌍☀️🌧️
