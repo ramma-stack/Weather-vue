@@ -40,14 +40,6 @@ To get started with WeatherWorld, follow these steps:
 
 5. Open your browser and navigate to `http://localhost:8080` to see WeatherWorld in action!
 
-## Contributing
-
-We welcome contributions to WeatherWorld! Whether you're fixing a bug or adding a new feature, please review our [contribution guidelines](CONTRIBUTING.md) before getting started.
-
-## License
-
-WeatherWorld is open-source and released under the [MIT License](LICENSE).
-
 ## Feedback
 
 If you have any feedback, suggestions, or issues to report, please feel free to [contact us](mailto:ramear11@gmail.com).
