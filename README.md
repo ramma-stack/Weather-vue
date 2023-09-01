@@ -1,6 +1,6 @@
 # WithWeather - Global Weather
 
-WeatherWorld is a web application built with Vue.js 3 and styled with Tailwind CSS that provides real-time weather information from all around the world. By integrating three powerful APIs - OpenWeatherMap, Mapbox, and IPGeolocation - WeatherWorld offers users a comprehensive weather dashboard to check the latest weather conditions at any location.
+WithWeather is a web application built with Vue.js 3 and styled with Tailwind CSS that provides real-time weather information from all around the world. By integrating three powerful APIs - OpenWeatherMap, Mapbox, and IPGeolocation - WeatherWorld offers users a comprehensive weather dashboard to check the latest weather conditions at any location.
 
 ## Features
 
